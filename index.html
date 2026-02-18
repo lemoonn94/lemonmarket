@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEUTRON X9 | ELITE CYBER WEAPON</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Particle Network Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Holographic Header -->
+        <div class="hologram-header">
+            <div class="glitch-container">
+                <h1 class="glitch" data-text="NEUTRON X9">NEUTRON X9</h1>
+            </div>
+            <div class="status-bar">
+                <div class="status-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>SYSTEM: <span class="status-online">ACTIVE</span></span>
+                </div>
+                <div class="status-item">
+                    <i class="fas fa-network-wired"></i>
+                    <span>NODES: <span id="nodeCount">0</span>/24</span>
+                </div>
+                <div class="status-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>TOTAL POWER: <span id="totalPower">0</span> TBPS</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard -->
+        <div class="dashboard">
+            <!-- Left Panel - Attack Configuration -->
+            <div class="panel attack-panel">
+                <div class="panel-header">
+                    <i class="fas fa-crosshairs"></i>
+                    <h2>ATTACK VECTOR</h2>
+                </div>
+                
+                <div class="target-input">
+                    <div class="input-group">
+                        <label>TARGET IP</label>
+                        <input type="text" id="targetIp" placeholder="xxx.xxx.xxx.xxx" class="cyber-input">
+                        <div class="input-glow"></div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>PORT</label>
+                        <input type="number" id="port" value="80" min="1" max="65535" class="cyber-input">
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group half">
+                            <label>DURATION (S)</label>
+                            <input type="number" id="duration" value="300" min="10" max="3600" class="cyber-input">
+                        </div>
+                        <div class="input-group half">
+                            <label>THREADS</label>
+                            <input type="number" id="threads" value="10000" min="1000" max="100000" class="cyber-input">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="method-selector">
+                    <h3>ATTACK METHOD</h3>
+                    <div class="method-grid">
+                        <div class="method-card" data-method="udp">
+                            <i class="fas fa-bolt"></i>
+                            <span>UDP FLOOD</span>
+                            <small>Layer 4 • 100 Gbps</small>
+                        </div>
+                        <div class="method-card" data-method="syn">
+                            <i class="fas fa-random"></i>
+                            <span>SYN FLOOD</span>
+                            <small>Layer 4 • TCP Handshake</small>
+                        </div>
+                        <div class="method-card" data-method="http">
+                            <i class="fas fa-globe"></i>
+                            <span>HTTP FLOOD</span>
+                            <small>Layer 7 • Application</small>
+                        </div>
+                        <div class="method-card" data-method="amp">
+                            <i class="fas fa-satellite-dish"></i>
+                            <span>AMP REFLECTION</span>
+                            <small>DNS/NTP • 200 Gbps</small>
+                        </div>
+                        <div class="method-card" data-method="icmp">
+                            <i class="fas fa-wifi"></i>
+                            <span>ICMP FLOOD</span>
+                            <small>Ping of Death</small>
+                        </div>
+                        <div class="method-card" data-method="slowloris">
+                            <i class="fas fa-hourglass-half"></i>
+                            <span>SLOWLORIS</span>
+                            <small>Slow Connection</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="attack-controls">
+                    <button id="startAttack" class="btn-start">
+                        <i class="fas fa-skull"></i>
+                        <span>EXECUTE ATTACK</span>
+                        <div class="btn-glow"></div>
+                    </button>
+                    <button id="stopAttack" class="btn-stop" disabled>
+                        <i class="fas fa-ban"></i>
+                        <span>ABORT MISSION</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Panel - Monitoring -->
+            <div class="panel monitor-panel">
+                <div class="panel-header">
+                    <i class="fas fa-chart-line"></i>
+                    <h2>LIVE MONITOR</h2>
+                </div>
+
+                <!-- 3D Network Visualization -->
+                <div class="network-viz" id="networkViz"></div>
+
+                <!-- Real-time Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">BANDWIDTH</span>
+                            <span class="stat-value" id="bandwidth">0.00</span>
+                            <span class="stat-unit">GBPS</span>
+                        </div>
+                        <div class="stat-progress" id="bandwidthProgress"></div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-cube"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">PACKETS/SEC</span>
+                            <span class="stat-value" id="packets">0</span>
+                            <span class="stat-unit">M</span>
+                        </div>
+                        <div class="stat-progress" id="packetsProgress"></div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">ELAPSED</span>
+                            <span class="stat-value" id="elapsed">00:00</span>
+                            <span class="stat-unit"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-bullseye"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">TARGET STATUS</span>
+                            <span class="stat-value" id="targetStatus">WAITING</span>
+                            <span class="stat-unit"></span>
+                        </div>
+                        <div class="target-pulse" id="targetPulse"></div>
+                    </div>
+                </div>
+
+                <!-- Advanced Charts -->
+                <div class="charts-container">
+                    <div class="chart-box">
+                        <canvas id="trafficChart"></canvas>
+                    </div>
+                    <div class="chart-box">
+                        <canvas id="packetChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Node Distribution -->
+                <div class="node-distribution">
+                    <h3>NODE DISTRIBUTION</h3>
+                    <div class="node-bars" id="nodeBars"></div>
+                </div>
+
+                <!-- Attack Log Terminal -->
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <i class="fas fa-terminal"></i>
+                        <span>ATTACK LOG - REAL TIME</span>
+                        <div class="terminal-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                    <div class="terminal-body" id="terminalBody">
+                        <div class="log-line">> SYSTEM BOOTED [NEUTRON X9 v3.7.4]</div>
+                        <div class="log-line">> ESTABLISHING SECURE CONNECTION...</div>
+                        <div class="log-line">> 24 NODES ONLINE - READY FOR DEPLOYMENT</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
